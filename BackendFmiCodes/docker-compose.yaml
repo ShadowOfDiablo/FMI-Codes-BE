@@ -19,7 +19,7 @@ services:
     image: mysql:8.0
     container_name: mysql-db
     ports:
-      - "33060:3306"
+      - "3306:33060"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=facepass
