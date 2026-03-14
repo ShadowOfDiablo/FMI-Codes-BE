@@ -25,13 +25,9 @@ public class CheckChallengeStatusHandler : IRequestHandler<CheckChallengeStatusR
         dto.status = challenge.Status;
 
         if (dto.status == "approved")
-        {
             dto.jwt = "Bearer " + _jwtService.GenerateToken(challenge.ChallengeCode);
-        }
         else
-        {
             dto.jwt = "";
-        }
 
         return dto;
     }

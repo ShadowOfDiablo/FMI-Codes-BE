@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Domain.Helpers;
 
-public class HelperFunctions
+public class IsValidHelper
 {
     public static bool CheckIsValidSignature(string publicKeyBase,string challengeCode, string signature)
     {

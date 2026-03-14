@@ -18,7 +18,7 @@ public class CompareSignatureHandler : IRequestHandler<CompareSignatureRequest, 
         var challenge = _context.Challenges.FirstOrDefault(c => c.ChallengeId == request.ChallengeId);
         var user = _context.Users.FirstOrDefault(u => challenge != null && u.UserId == challenge.UserId);
         
-        var isValid = user != null && challenge != null && HelperFunctions.CheckIsValidSignature(user.PublicKey,challenge.ChallengeCode, request.Signature);
+        var isValid = user != null && challenge != null && IsValidHelper.CheckIsValidSignature(user.PublicKey,challenge.ChallengeCode, request.Signature);
         
         await _context.Challenges
             .Where(c => c.ChallengeId == request.ChallengeId)
