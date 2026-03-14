@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Features;
 
-[Authorize]
+//[Authorize]
+[ApiController]
+[Route("[controller]")]
 public class PrivateController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -28,9 +30,7 @@ public class PrivateController : ControllerBase
         try
         {
             var isCorrect = await _mediator.Send(new CompareSignatureRequest(challengeId,signature));
-            if (!isCorrect)
-                return Unauthorized();
-            return Ok();
+            return Ok(isCorrect);
         }
         catch (Exception e)
         {

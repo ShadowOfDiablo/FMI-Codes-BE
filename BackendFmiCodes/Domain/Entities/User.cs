@@ -8,4 +8,11 @@ public class User
     public String PublicKey { get; set; }
 
     public List<Challenge> Challenges { get; set; }
+
+    public User(string email, string pushToken, string publicKey)
+    {
+        Email = email;
+        PushToken = pushToken;
+        PublicKey = publicKey;
+    }
 }
