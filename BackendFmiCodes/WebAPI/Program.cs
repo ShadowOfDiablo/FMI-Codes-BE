@@ -11,10 +11,15 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<FmiDatabaseConfig>(options =>
-    options.UseMySql(
-        connectionString,
-        ServerVersion.AutoDetect(connectionString)
-    ));
+{
+    if (!string.IsNullOrEmpty(connectionString))
+    {
+        options.UseMySql(
+            connectionString,
+            new MySqlServerVersion(new Version(8, 0, 31))
+        );
+    }
+});
 
 
 //MediatR
@@ -28,10 +33,17 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Enable Swagger middleware
-if (app.Environment.IsDevelopment())
+// Enable Swagger middleware for all environments to help debugging
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-app.Run();
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+    c.RoutePrefix = string.Empty; // Set Swagger at the root
+});
+
+app.MapGet("/health", () => Results.Ok("Service is running"));
+
+app.MapControllers();
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Run($"http://0.0.0.0:{port}");

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Features;
 
+[ApiController]
+[Route("api/[controller]")]
 [Authorize]
 public class PrivateController : ControllerBase
 {
