@@ -3,6 +3,8 @@ using Domain.Entities;
 using Domain.Entities.Services;
 using Domain.Handlers.Login;
 using Domain.Services;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +39,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<LoginServices>();
 builder.Services.AddScoped<ChallengeServices>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<PushNotificationServices>();
 builder.Services.AddScoped<JwtService>();
+
+
+//Firebase 
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile("Firebase/fmi-codes-c283c-firebase-adminsdk-fbsvc-115446c519.json")
+});
 
 var app = builder.Build();
 

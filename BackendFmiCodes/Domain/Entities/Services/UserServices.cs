@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities.Services;
@@ -23,5 +24,18 @@ public class UserServices
         }
 
         return user.UserId;
+    }
+    public UserIdAndPushToken GetUserIdAndPushToken(string email)
+    {
+        var user = _context.Users
+            .FirstOrDefault(u => u.Email == email);
+
+        if (user == null)
+        {
+            throw new Exception("User not found.");
+        }
+        var userDto = new UserIdAndPushToken(user.PushToken, user.UserId);
+
+        return userDto;
     }
 }

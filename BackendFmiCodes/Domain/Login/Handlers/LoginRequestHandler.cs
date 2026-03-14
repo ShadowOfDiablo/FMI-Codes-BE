@@ -9,12 +9,15 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, bool>
     private readonly LoginServices _loginServices;
     private readonly UserServices _userServices;
     private readonly ChallengeServices _challengeServices;
+    private readonly PushNotificationServices _pushNotificationServices;
 
-    public LoginRequestHandler(LoginServices loginServices,  UserServices userServices, ChallengeServices challengeServices)
+    public LoginRequestHandler(LoginServices loginServices,  UserServices userServices,
+        ChallengeServices challengeServices, PushNotificationServices pushNotificationServices)
     {
         _loginServices = loginServices;
         _userServices = userServices;
-        _challengeServices = challengeServices;
+        _challengeServices = challengeServices; 
+        _pushNotificationServices = pushNotificationServices;
     }
     public async Task<bool> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
@@ -23,16 +26,18 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, bool>
             var senderPath = _loginServices.CreateSenderPath();
             var challengeCode = _loginServices.CreateChallengeCode();
             var expireTime =  _loginServices.CreateExpireTime();
-            var userId = _userServices.GetUserId(request.Email);
+            var userIdAndPushToken = _userServices.GetUserIdAndPushToken(request.Email);
             var newChallengeResult = _challengeServices.CreateChallenge(request.Email, 
                 senderPath, challengeCode,
-                expireTime, userId);
-            if (!newChallengeResult)
+                expireTime, userIdAndPushToken.UserId);
+            if (newChallengeResult == -1)
             {
                 throw new Exception("Can't create Challenge");
             }
             // create push notification
-
+            _pushNotificationServices.SendLoginPush(userIdAndPushToken.PushToken, challengeCode, newChallengeResult);
+            var returnResult = await _loginServices.ReturnApiResponse(senderPath, userIdAndPushToken.UserId);
+            
             return true;
         }
         catch (Exception e)

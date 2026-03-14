@@ -11,7 +11,7 @@
             _context = context;
         }
 
-        public bool CreateChallenge(string email, string senderPath, string challengeCode, DateTime expireDate, int userId)
+        public int CreateChallenge(string email, string senderPath, string challengeCode, DateTime expireDate, int userId)
         {
             var challenge = new Challenge
             (
@@ -24,7 +24,12 @@
 
             _context.Challenges.Add(challenge);
             var result =  _context.SaveChanges();
+            if (result > 0)
+            {
+                return challenge.ChallengeId;
+            }
 
-            return result > 0;
+
+            return -1; 
         }
     }

@@ -1,14 +1,11 @@
-**/bin/
-**/obj/
+*.json
+!appsettings.json
+!appsettings.Development.json
 
-.idea/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 .vs/
-
-*.user
-*.suo
-
-*.log
-
-.DS_Store
-Thumbs.db
