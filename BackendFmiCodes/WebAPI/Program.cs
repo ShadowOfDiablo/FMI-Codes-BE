@@ -45,5 +45,5 @@ app.MapGet("/health", () => Results.Ok("Service is running"));
 
 app.MapControllers();
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-app.Run($"http://0.0.0.0:{port}");
+var port = Environment.GetEnvironmentVariable("PORT") ?? "33060";
+app.Run($"http://0.0.0.0:33060");
