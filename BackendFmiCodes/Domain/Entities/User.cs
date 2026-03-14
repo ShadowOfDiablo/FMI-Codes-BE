@@ -3,9 +3,9 @@ namespace Domain.Entities;
 public class User
 {
     public int UserId { get; set; }
-    public String Email { get; set; }
-    public String PushToken { get; set; }
-    public String PublicKey { get; set; }
+    public string Email { get; set; }
+    public string PushToken { get; set; }
+    public string PublicKey { get; set; }
 
     public List<Challenge> Challenges { get; set; }
 

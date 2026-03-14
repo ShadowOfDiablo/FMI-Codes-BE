@@ -1,5 +1,7 @@
 using Domain.Entities;
-using Domain.Handlers;
+using Domain.Entities.Services;
+using Domain.Handlers.Login;
+using Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Database config
+// Database config
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<FmiDatabaseConfig>(options =>
@@ -21,20 +23,21 @@ builder.Services.AddDbContext<FmiDatabaseConfig>(options =>
 //MediatR
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssemblies(
-        typeof(RegisterHandler).Assembly,
-        typeof(CompareSignatureHandler).Assembly
-    );
+
+    cfg.RegisterServicesFromAssembly(typeof(LoginRequestHandler).Assembly);
+    
 });
 
-
-
-//Add Controllers
+// Add Controllers
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
+
+//Services 
+builder.Services.AddScoped<LoginServices>();
+builder.Services.AddScoped<ChallengeServices>();
+builder.Services.AddScoped<UserServices>();
 
 var app = builder.Build();
-
-app.MapControllers();
 
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())
@@ -42,4 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapControllers();   // <- това ти липсва
+
 app.Run();

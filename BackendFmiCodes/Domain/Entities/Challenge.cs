@@ -10,5 +10,17 @@ public class Challenge
 
     public int UserId { get; set; }
     public User User { get; set; }
-    
+    public Challenge()
+    {
+    }
+
+    public Challenge(string challengeCode, string status, string webSiteURL, DateTime expiredDate, int userId)
+    {
+        this.ChallengeCode = challengeCode;
+        this.Status = status;
+        this.WebSiteURL = webSiteURL;
+        this.ExpiredDate = expiredDate;
+        this.UserId = userId;
+    }
+
 }
