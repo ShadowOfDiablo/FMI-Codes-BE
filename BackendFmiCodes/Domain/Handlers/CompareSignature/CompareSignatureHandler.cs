@@ -15,7 +15,11 @@ public class CompareSignatureHandler : IRequestHandler<CompareSignatureRequest, 
     }
     public async Task<bool> Handle(CompareSignatureRequest request, CancellationToken cancellationToken)
     {
-        var isValid = HelperFunctions.CheckIsValidSignature(request.ChallengeId, request.Signature);
+        var challenge = _context.Challenges.FirstOrDefault(c => c.ChallengeId == request.ChallengeId);
+        var user = _context.Users.FirstOrDefault(u => challenge != null && u.UserId == challenge.UserId);
+        
+        var isValid = user != null && challenge != null && HelperFunctions.CheckIsValidSignature(user.PublicKey,challenge.ChallengeCode, request.Signature);
+        
         await _context.Challenges
             .Where(c => c.ChallengeId == request.ChallengeId)
             .ExecuteUpdateAsync(s => s.SetProperty(c => c.Status, 

@@ -24,7 +24,7 @@ public class PrivateController : ControllerBase
             return Ok(isSuccess);
     }
     
-    [HttpPut("compareSignature")]
+    [HttpPost("compareSignature")]
     public async Task<IActionResult> CompareSignature([FromQuery] int challengeId, [FromQuery] string signature)
     {
         try
