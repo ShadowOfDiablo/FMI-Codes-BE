@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Features;
 
+[ApiController]
+[Route("[controller]")]
 public class PublicController : ControllerBase
 {
     private readonly IMediator _mediator;
