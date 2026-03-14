@@ -1,3 +1,4 @@
+using Domain.CheckStatus.JwtServices;
 using Domain.Entities;
 using Domain.Entities.Services;
 using Domain.Handlers.Login;
@@ -36,6 +37,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<LoginServices>();
 builder.Services.AddScoped<ChallengeServices>();
 builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<JwtService>();
 
 var app = builder.Build();
 
