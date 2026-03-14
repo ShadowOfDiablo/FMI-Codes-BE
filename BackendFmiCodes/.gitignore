@@ -9,3 +9,9 @@
 *.sln.docstates
 
 .vs/
+[Bb]in/
+[Oo]bj/
+*.dll
+*.exe
+*.pdb
+*.cache
