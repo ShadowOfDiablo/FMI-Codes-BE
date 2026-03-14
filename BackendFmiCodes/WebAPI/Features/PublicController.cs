@@ -1,9 +1,11 @@
 using Domain.Handlers;
+using Domain.Handlers.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Features;
-
+[ApiController]
+[Route("[controller]")]
 public class PublicController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -18,8 +20,7 @@ public class PublicController : ControllerBase
     {
         try
         {
-            var challenge = await _mediator.Send(new CheckChallengeStatusRequest(id));
-            return Ok(challenge);
+            return Ok();
         }
         catch (Exception e)
         {
@@ -27,13 +28,13 @@ public class PublicController : ControllerBase
         }   
     }
 
-    [HttpGet("createChallenge")]
-    public async Task<IActionResult> CreateChallenge([FromQuery] string email)
+    [HttpGet("login")]
+    public async Task<IActionResult> Login([FromQuery] LoginRequest request)
     {
         try
         {
-            var user = await _mediator.Send(new CreateChallengeRequest(email));
-            return Ok(user);
+            var res = await _mediator.Send(request);
+            return Ok(res); 
         }
         catch (Exception e)
         {

@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Handlers\Challenge\" />
+      <Folder Include="Login\" />
     </ItemGroup>
 
 </Project>
