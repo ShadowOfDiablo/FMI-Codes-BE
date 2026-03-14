@@ -1,3 +1,4 @@
+using Domain.CheckStatus.Helpers;
 using Domain.Handlers;
 using Domain.Handlers.Login;
 using MediatR;
@@ -21,7 +22,8 @@ public class PublicController : ControllerBase
     {
         try
         {
-            return Ok();
+            var jwtStatusDto = await _mediator.Send(new CheckChallengeStatusRequest(id));
+            return Ok(jwtStatusDto);
         }
         catch (Exception e)
         {
