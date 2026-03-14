@@ -1,4 +1,5 @@
 using Domain.Handlers;
+using Domain.Handlers.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
