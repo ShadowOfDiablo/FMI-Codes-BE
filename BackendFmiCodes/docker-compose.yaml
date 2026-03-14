@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  facepass-api:
+    container_name: facepass-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:9001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    restart: unless-stopped
