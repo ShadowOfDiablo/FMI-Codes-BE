@@ -8,7 +8,8 @@ public class PushNotificationServices
     {
         var message = new Message()
         {
-            Token = "eVAvlff8Q5OhBdwZ1BTcBe:APA91bEKDDY86xTSA7-jmU5e9f03BLees-tFmaa4AfSfpFMIDOVobgNcSsadwhALhksHGhvUg2H1dNG3Wdp9G8pg-cvM_vF6uf9UzCN9_qcelfgsye15QhU",
+            //Token = "eVAvlff8Q5OhBdwZ1BTcBe:APA91bEKDDY86xTSA7-jmU5e9f03BLees-tFmaa4AfSfpFMIDOVobgNcSsadwhALhksHGhvUg2H1dNG3Wdp9G8pg-cvM_vF6uf9UzCN9_qcelfgsye15QhU",
+            Token = token, 
             Notification = new Notification
             {
                 Title = "Login Request",
