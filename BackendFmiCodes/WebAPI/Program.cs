@@ -49,8 +49,15 @@ FirebaseApp.Create(new AppOptions()
     Credential = GoogleCredential.FromFile("Firebase/fmi-codes-c283c-firebase-adminsdk-fbsvc-115446c519.json")
 });
 
+
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<FmiDatabaseConfig>();
+    // Това ще приложи всички миграции, които не са в базата още
+    dbContext.Database.Migrate(); 
+}
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())
 {
