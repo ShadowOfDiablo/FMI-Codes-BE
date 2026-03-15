@@ -18,18 +18,18 @@ public class PrivateController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromQuery] string email, [FromQuery] string pushToken, [FromQuery] string publicKey)
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-            var isSuccess = await _mediator.Send(new RegisterRequest(email,pushToken, publicKey));
+            var isSuccess = await _mediator.Send(request);
             return Ok(isSuccess);
     }
     
     [HttpPost("compareSignature")]
-    public async Task<IActionResult> CompareSignature([FromQuery] int challengeId, [FromQuery] string signature)
+    public async Task<IActionResult> CompareSignature([FromBody] CompareSignatureRequest request)
     {
         try
         {
-            var isCorrect = await _mediator.Send(new CompareSignatureRequest(challengeId,signature));
+            var isCorrect = await _mediator.Send(request);
             return Ok(isCorrect);
         }
         catch (Exception e)
