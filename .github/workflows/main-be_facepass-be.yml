@@ -23,11 +23,13 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      # FIXED: Added the exact project path here
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build BackendFmiCodes/WebAPI/WebAPI.csproj --configuration Release
 
+      # FIXED: Added the exact project path here too
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish BackendFmiCodes/WebAPI/WebAPI.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -47,7 +49,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+        
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -62,4 +64,3 @@ jobs:
           app-name: 'facepass-be'
           slot-name: 'Production'
           package: .
-          
