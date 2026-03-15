@@ -1,10 +1,11 @@
 using Domain.Entities.Services;
+using Domain.Login.Dtos;
 using Domain.Services;
 using MediatR;
 
 namespace Domain.Handlers.Login;
 
-public class LoginRequestHandler : IRequestHandler<LoginRequest, bool>
+public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginDto>
 {
     private readonly LoginServices _loginServices;
     private readonly UserServices _userServices;
@@ -19,7 +20,7 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, bool>
         _challengeServices = challengeServices; 
         _pushNotificationServices = pushNotificationServices;
     }
-    public async Task<bool> Handle(LoginRequest request, CancellationToken cancellationToken)
+    public async Task<LoginDto> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -35,10 +36,10 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, bool>
                 throw new Exception("Can't create Challenge");
             }
             // create push notification
-            _pushNotificationServices.SendLoginPush(userIdAndPushToken.PushToken, challengeCode, newChallengeResult);
-            var returnResult = await _loginServices.ReturnApiResponse(senderPath, userIdAndPushToken.UserId);
+            //_pushNotificationServices.SendLoginPush(userIdAndPushToken.PushToken, challengeCode, newChallengeResult);
+            //var returnResult = await _loginServices.ReturnApiResponse(senderPath, userIdAndPushToken.UserId);
             
-            return true;
+            return new LoginDto(challengeCode, newChallengeResult);
         }
         catch (Exception e)
         {
