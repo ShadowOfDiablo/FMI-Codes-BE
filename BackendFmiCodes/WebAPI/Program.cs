@@ -9,6 +9,18 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        policy =>
+        {
+            policy.AllowAnyOrigin()    // Позволява заявки от всякъде (за тестове е супер)
+                .AllowAnyHeader()    // Позволява всякакви хедъри (Content-Type, Authorization и т.н.)
+                .AllowAnyMethod();   // Позволява GET, POST, PUT, DELETE и т.н.
+        });
+});
 // Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
