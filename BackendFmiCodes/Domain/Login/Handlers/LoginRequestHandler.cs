@@ -36,7 +36,7 @@ public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginDto>
                 throw new Exception("Can't create Challenge");
             }
             // create push notification
-            //_pushNotificationServices.SendLoginPush(userIdAndPushToken.PushToken, challengeCode, newChallengeResult);
+            _pushNotificationServices.SendLoginPush(userIdAndPushToken.PushToken, challengeCode, newChallengeResult);
             //var returnResult = await _loginServices.ReturnApiResponse(senderPath, userIdAndPushToken.UserId);
             
             return new LoginDto(challengeCode, newChallengeResult);
