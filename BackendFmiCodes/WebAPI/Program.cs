@@ -58,7 +58,7 @@ builder.Services.AddScoped<JwtService>();
 //Firebase 
 FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromFile("Firebase/fmi-codes-c283c-firebase-adminsdk-fbsvc-115446c519.json")
+    Credential = GoogleCredential.FromFile("Firebase/fmi-codes-c283c-firebase-adminsdk-fbsvc-366485ffa1.json")
 });
 
 
