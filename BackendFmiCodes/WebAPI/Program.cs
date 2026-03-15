@@ -56,11 +56,22 @@ builder.Services.AddScoped<JwtService>();
 
 
 //Firebase 
-FirebaseApp.Create(new AppOptions()
-{
-    Credential = GoogleCredential.FromFile("Firebase/fmi-codes-c283c-firebase-adminsdk-fbsvc-366485ffa1.json")
-});
+var firebaseJson = Environment.GetEnvironmentVariable("firebase_service_account");
 
+if (!string.IsNullOrEmpty(firebaseJson))
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromJson(firebaseJson)
+    });
+}
+else
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromFile("Firebase/fmi-codes-c283c-firebase-adminsdk-fbsvc-29281f9603.json")
+    });
+}
 
 var app = builder.Build();
 
